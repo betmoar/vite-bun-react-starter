@@ -10,7 +10,7 @@
 bunx create-vite@latest my-app --template react-ts
 cd my-app
 
-# Install dependencies
+# Install dependencies using Bun
 bun install
 ```
 
@@ -24,15 +24,83 @@ bunx tailwindcss init -p
 Update `tailwind.config.js`:
 ```javascript
 /** @type {import('tailwindcss').Config} */
-export default {
+const { fontFamily } = require("tailwindcss/defaultTheme")
+
+module.exports = {
+  darkMode: ["class"],
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        sans: ["var(--font-sans)", ...fontFamily.sans],
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: 0 },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: 0 },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
+    },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 }
 ```
 
@@ -41,15 +109,86 @@ Add to `src/index.css`:
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-```
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
 
-## Step 3: Install and Setup shadcn-ui
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+ 
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+ 
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+ 
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+ 
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+ 
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+ 
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+ 
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+## Step 3: Install and Configure shadcn-ui
 ```bash
-# Install shadcn-ui CLI
-bun add -D @shadcn/ui
-
-# Initialize shadcn-ui
-bunx shadcn-ui@latest init
+# Install and initialize shadcn-ui with Bun
+# Note: If you encounter "could not determine executable to run for package shadcn-ui"
+# Use this command instead:
+bun x --bun shadcn@latest init
 ```
 
 Configuration options for shadcn-ui init:
@@ -65,36 +204,93 @@ Configuration options for shadcn-ui init:
 √ Are you using React Server Components? › no
 ```
 
-## Step 4: Add Path Aliases
+To add shadcn-ui components, use:
+```bash
+# Example to add the button component
+bun x --bun shadcn@latest add button
+
+# You can add other components the same way
+bun x --bun shadcn@latest add [component-name]
+```
+
+Available components can be found at [shadcn-ui components](https://ui.shadcn.com/docs/components/accordion)
+
+## Step 4: Setup shadcn-ui Utils
+Create `src/lib/utils.ts`:
+```typescript
+import { type ClassValue, clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
+ 
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+```
+
+Install required dependencies:
+```bash
+bun add clsx tailwind-merge tailwindcss-animate
+```
+
+## Step 5: Add Path Aliases
 Update `tsconfig.json`:
 ```json
 {
   "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
-  }
+    },
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
+```
+
+Create `tsconfig.node.json`:
+```json
+{
+  "compilerOptions": {
+    "composite": true,
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["vite.config.ts"]
 }
 ```
 
 Update `vite.config.ts`:
 ```typescript
-import path from "path"
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { fileURLToPath } from 'url'
 
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
 })
-```
 
-## Step 5: Setup Backend with Bun
+## Step 6: Setup Backend with Bun
 ```bash
 # Initialize backend directory
 mkdir backend
@@ -125,20 +321,16 @@ app.listen(port, () => {
 });
 ```
 
-## Step 6: Project Structure
+## Step 7: Project Structure
 ```plaintext
 project-root/
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── lib/
-│   │   ├── features/
-│   │   ├── hooks/
-│   │   ├── types/
-│   │   └── utils/
-│   ├── public/
-│   ├── index.html
-│   └── package.json
+├── src/
+│   ├── components/
+│   ├── lib/
+│   ├── features/
+│   ├── hooks/
+│   ├── types/
+│   └── utils/
 ├── backend/
 │   ├── src/
 │   │   ├── controllers/
@@ -146,80 +338,35 @@ project-root/
 │   │   ├── middleware/
 │   │   └── utils/
 │   └── package.json
-└── README.md
+└── public/
 ```
 
-## Step 7: Add Development Scripts
-Update frontend `package.json`:
-```json
-{
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  }
-}
+## Step 8: Running the Project
+Frontend:
+```bash
+# Start development server
+bun run dev
+
+# Build for production
+bun run build
+
+# Preview production build
+bun run preview
 ```
 
-Update backend `package.json`:
-```json
-{
-  "scripts": {
-    "dev": "bun --watch src/index.ts",
-    "start": "bun src/index.ts",
-    "test": "bun test"
-  }
-}
+Backend:
+```bash
+cd backend
+
+# Start development server with hot reload
+bun --watch src/index.ts
+
+# Start production server
+bun src/index.ts
 ```
 
-## Step 8: Initialize Git Repository
+## Step 9: Initialize Git Repository
 ```bash
 git init
-```
-
-Create `.gitignore`:
-```plaintext
-# Dependencies
-node_modules
-.pnp
-.pnp.js
-
-# Production
-dist
-build
-
-# Environment files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Editor directories
-.idea
-.vscode
-*.swp
-*.swo
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-```
-
-## Next Steps
-1. Install additional required dependencies based on project needs
-2. Set up ESLint and Prettier configurations
-3. Configure environment variables
-4. Set up testing framework (Jest/Vitest)
-5. Add CI/CD pipeline configuration
+git add .
+git commit -m "Initial commit: Setup vite-bun-react-starter template"

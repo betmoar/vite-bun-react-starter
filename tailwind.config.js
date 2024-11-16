@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 const { fontFamily } = require("tailwindcss/defaultTheme")
 
-module.exports = {
+export default {
   darkMode: ["class"],
   content: [
     "./index.html",

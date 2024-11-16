@@ -1,157 +1,191 @@
-# Vite-Bun-React-Starter
+# Vite Bun React Starter
 
-A modern, full-stack TypeScript template featuring React, Vite, Bun, and ShadCN UI. This template provides a production-ready setup for building scalable web applications.
+A modern, full-stack React starter template using Vite, Bun, and Tailwind CSS.
 
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
+## Features
 
-## ✨ Features
+- ⚡️ **Vite** - Lightning fast frontend tooling
+- 🔥 **Bun** - Incredibly fast JavaScript runtime and package manager
+- ⚛️ **React 18** - Latest React features
+- 📝 **TypeScript** - Type safety and better developer experience
+- 🎨 **Tailwind CSS** - Utility-first CSS framework
+- 🎯 **shadcn/ui** - High-quality, accessible components
+- 🔄 **Express Backend** - Robust backend API support
+- 🧪 **Testing** - Comprehensive testing setup with Vitest and Testing Library
+- 🛠️ **Path Aliases** - Clean import statements using @/ prefix
+- 🌙 **Dark Mode** - Built-in dark mode support
+- 🔍 **ESLint** - Code quality and consistency
 
-- 🚀 **Frontend**
-  - React with TypeScript for type-safe code
-  - Vite for lightning-fast development
-  - Tailwind CSS for utility-first styling
-  - ShadCN UI for beautiful, accessible components
-  - Path aliases configured for clean imports
+## Prerequisites
 
-- 💪 **Backend**
-  - Bun runtime for high-performance server
-  - Express.js configured with TypeScript
-  - CORS enabled
-  - Ready for API development
-
-- 🛠️ **Development Experience**
-  - Hot Module Replacement (HMR)
-  - TypeScript path aliases
-  - ESLint and Prettier configured
-  - Git hooks ready
-  - Organized project structure
-
-## 📋 Prerequisites
-
-- Node.js >= 18
+- Node.js >= 18.0.0
 - Bun >= 1.0.0
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # Clone the repository
-git clone https://github.com/betmoar/vite-bun-react-starter.git
+git clone https://github.com/yourusername/vite-bun-react-starter.git
 cd vite-bun-react-starter
 
 # Install frontend dependencies
-cd frontend
 bun install
 
 # Start frontend development server
-bun dev
+bun run dev
 
-# In a new terminal, start backend server
-cd ../backend
+# In a separate terminal, install backend dependencies
+cd backend
 bun install
-bun dev
+
+# Start backend development server
+bun run dev
 ```
 
-Visit `http://localhost:5173` to see your app.
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 project-root/
-├── frontend/
+├── src/                   # Frontend source files
+│   ├── components/        # React components
+│   │   ├── ui/           # shadcn/ui components
+│   │   └── theme/        # Theme-related components
+│   ├── lib/              # Utility libraries
+│   ├── features/         # Feature-based modules
+│   ├── hooks/            # Custom React hooks
+│   ├── pages/            # Page components
+│   ├── test/             # Test utilities and setup
+│   ├── types/            # TypeScript type definitions
+│   └── utils/            # Helper functions
+├── backend/              # Backend source files
 │   ├── src/
-│   │   ├── components/    # Reusable UI components
-│   │   ├── lib/          # Utility functions and shared logic
-│   │   ├── features/     # Feature-specific components and logic
-│   │   ├── hooks/        # Custom React hooks
-│   │   ├── types/        # TypeScript type definitions
-│   │   └── utils/        # Helper functions
-│   ├── public/           # Static assets
-│   ├── index.html
-│   └── package.json
-├── backend/
-│   ├── src/
-│   │   ├── controllers/  # Request handlers
+│   │   ├── controllers/  # Route controllers
 │   │   ├── routes/       # API routes
-│   │   ├── middleware/   # Custom middleware
-│   │   └── utils/        # Helper functions
-│   └── package.json
-└── README.md
+│   │   ├── middleware/   # Express middleware
+│   │   └── utils/        # Backend utilities
+│   └── package.json      # Backend dependencies
+└── public/               # Static assets
 ```
 
-## 🔧 Available Scripts
+## Available Scripts
 
-### Frontend
-
+Frontend:
 ```bash
-bun dev          # Start development server
-bun build        # Build for production
-bun preview      # Preview production build
-bun lint         # Run ESLint
+# Start development server
+bun run dev
+
+# Build for production
+bun run build
+
+# Preview production build
+bun run preview
+
+# Run tests
+bun run test
+
+# Run tests with UI
+bun run test:ui
+
+# Generate test coverage
+bun run test:coverage
 ```
 
-### Backend
-
+Backend:
 ```bash
-bun dev          # Start development server with watch mode
-bun start        # Start production server
-bun test         # Run tests
+# Start development server with hot reload
+bun run dev
+
+# Start production server
+bun run start
 ```
 
-## 🎨 Customizing ShadCN UI
+## Testing
 
-This template includes a basic setup of ShadCN UI. To add more components:
+The project uses Vitest and Testing Library for testing:
 
+- **Unit Tests**: Test individual components and hooks
+- **Integration Tests**: Test component interactions
+- **Custom Test Utils**: Wrapper for consistent test setup
+- **Coverage Reports**: Track test coverage
+
+Run tests:
 ```bash
-cd frontend
-bunx shadcn-ui@latest add button
-bunx shadcn-ui@latest add card
-# etc...
+# Run tests in watch mode
+bun run test
+
+# Run tests with UI
+bun run test:ui
+
+# Generate coverage report
+bun run test:coverage
 ```
 
-## 🔒 Environment Variables
-
-1. Create `.env` files in both frontend and backend directories:
+## Adding shadcn/ui Components
 
 ```bash
-# frontend/.env
+# Add a new component
+bun x --bun shadcn@latest add button
+
+# Available components at: https://ui.shadcn.com/docs/components/accordion
+```
+
+## Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+# Frontend
 VITE_API_URL=http://localhost:3000
 
-# backend/.env
+# Backend
 PORT=3000
 ```
 
-## 📚 Additional Documentation
+## Path Aliases
 
-- [React Documentation](https://react.dev)
-- [Vite Documentation](https://vitejs.dev)
-- [Bun Documentation](https://bun.sh)
-- [ShadCN UI Documentation](https://ui.shadcn.com)
-- [Tailwind CSS Documentation](https://tailwindcss.com)
+Import using the `@/` prefix:
 
-## 🤝 Contributing
+```typescript
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+```
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## Tech Stack
 
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
+- [Vite](https://vitejs.dev/) - Frontend build tool
+- [Bun](https://bun.sh/) - JavaScript runtime & package manager
+- [React](https://reactjs.org/) - UI library
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Tailwind CSS](https://tailwindcss.com/) - CSS framework
+- [shadcn/ui](https://ui.shadcn.com/) - Component library
+- [Express](https://expressjs.com/) - Backend framework
+- [Vitest](https://vitest.dev/) - Testing framework
+- [Testing Library](https://testing-library.com/) - Testing utilities
+
+## Development
+
+1. Frontend runs on `http://localhost:5173`
+2. Backend runs on `http://localhost:3000`
+3. API endpoint examples:
+   - Health check: `GET http://localhost:3000/health`
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
-- [Vite](https://vitejs.dev) for the incredible dev experience
-- [ShadCN UI](https://ui.shadcn.com) for the beautiful components
-- [Bun](https://bun.sh) for the fast runtime
-- [Tailwind CSS](https://tailwindcss.com) for the utility-first CSS framework
-
----
-
-Made with ❤️ by [Your Name]
+- [Vite](https://vitejs.dev/)
+- [Bun](https://bun.sh/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Vitest](https://vitest.dev/)
+- [Testing Library](https://testing-library.com/)
